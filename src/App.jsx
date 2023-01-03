@@ -22,6 +22,24 @@ const App = () => {
     setInCompTodos(newTodos);
   };
 
+  const onClickComplete = (index) => {
+    const newInCompTodos = [...inCompTodos];
+    newInCompTodos.splice(index, 1);
+
+    const newCompTodos = [...compTodos, inCompTodos[index]];
+    setInCompTodos(newInCompTodos);
+    setCompTodos(newCompTodos);
+  };
+
+  const onClickInComplete = (index) => {
+    const newCompTodos = [...compTodos];
+    newCompTodos.splice(index, 1);
+
+    const newInCompTodos = [...inCompTodos, compTodos[index]];
+    setInCompTodos(newInCompTodos);
+    setCompTodos(newCompTodos);
+  };
+
   return (
     <>
       <div className="input-area">
@@ -40,7 +58,7 @@ const App = () => {
               <div key={todo}>
                 <li className="list-row">
                   <p>{todo}</p>
-                  <button>完了</button>
+                  <button onClick={() => onClickComplete(index)}>完了</button>
                   <button onClick={() => onClickDelete(index)}>削除</button>
                 </li>
               </div>
@@ -51,12 +69,12 @@ const App = () => {
       <div className="complete-area">
         <p className="title">完了したTodo</p>
         <ul>
-          {compTodos.map((todo) => {
+          {compTodos.map((todo, index) => {
             return (
               <div key={todo}>
                 <li className="list-row">
                   <p>{todo}</p>
-                  <button>戻す</button>
+                  <button onClick={() => onClickInComplete(index)}>戻す</button>
                 </li>
               </div>
             );
