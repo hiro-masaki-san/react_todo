@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import Style from "./styles.css";
+import { InputTodo } from "./components/InputTodo";
+import { InCompTodos } from "./components/InCompTodos";
+import { CompTodos } from "./components/CompTodos";
 
 const App = () => {
   const [taskInput, setTaskInput] = useState("");
@@ -42,14 +45,13 @@ const App = () => {
 
   return (
     <>
-      <div className="input-area">
-        <input
-          placeholder="Todoを入力"
-          onChange={onChangeTaskInput}
-          value={taskInput}
-        />
-        <button onClick={onClickAdd}>追加</button>
-      </div>
+      <InputTodo
+        taskInput={taskInput}
+        onChangeTaskInput={onChangeTaskInput}
+        onClickAdd={onClickAdd}
+        disabled={inCompTodos.length >= 5}
+      />
+      {inCompTodos.length >= 5 && <p>未完了タスクは5件がmax。消化して～！</p>}
       <div className="incomplete-area">
         <p className="title">未完了のTodo</p>
         <ul>
