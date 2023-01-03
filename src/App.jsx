@@ -3,8 +3,8 @@ import Style from "./styles.css";
 
 const App = () => {
   const [taskInput, setTaskInput] = useState("");
-  const [compTodos, setCompTodos] = useState(["sample1", "sample2"]);
-  const [inCompTodos, setInCompTodos] = useState(["sample3"]);
+  const [inCompTodos, setInCompTodos] = useState(["sample1", "sample2"]);
+  const [compTodos, setCompTodos] = useState(["sample3"]);
 
   const onChangeTaskInput = (event) => {
     setTaskInput(event.target.value);
@@ -12,8 +12,14 @@ const App = () => {
 
   const onClickAdd = () => {
     if (taskInput === "") return;
-    setCompTodos([...compTodos, taskInput]);
+    setInCompTodos([...inCompTodos, taskInput]);
     setTaskInput("");
+  };
+
+  const onClickDelete = (index) => {
+    const newTodos = [...inCompTodos];
+    newTodos.splice(index, 1);
+    setInCompTodos(newTodos);
   };
 
   return (
@@ -29,13 +35,13 @@ const App = () => {
       <div className="incomplete-area">
         <p className="title">未完了のTodo</p>
         <ul>
-          {compTodos.map((todo) => {
+          {inCompTodos.map((todo, index) => {
             return (
               <div key={todo}>
                 <li className="list-row">
                   <p>{todo}</p>
                   <button>完了</button>
-                  <button>削除</button>
+                  <button onClick={() => onClickDelete(index)}>削除</button>
                 </li>
               </div>
             );
@@ -45,7 +51,7 @@ const App = () => {
       <div className="complete-area">
         <p className="title">完了したTodo</p>
         <ul>
-          {inCompTodos.map((todo) => {
+          {compTodos.map((todo) => {
             return (
               <div key={todo}>
                 <li className="list-row">
